@@ -8,6 +8,7 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\Admin\{
     DashboardController,
+    PrefeituraController,
 };
 
 /*
@@ -21,9 +22,6 @@ use App\Http\Controllers\Admin\{
 |
 */
 
-Route::get('/teste', function () {
-    return view('app');
-});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -44,7 +42,8 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::prefix('admin')->name('admin')->middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::resource('prefeituras', PrefeituraController::class);
 });
