@@ -311,6 +311,7 @@ export default {
 
   methods: {
     openModal() {
+      this.editMode = false;
       this.form.clearErrors();
       this.modal.show();
       this.form.reset();
@@ -333,8 +334,8 @@ export default {
     },
 
     edit(pref) {
-      this.editMode = true;
       this.openModal();
+      this.editMode = true;
       this.form = Object.assign(this.form, pref);
     },
 
