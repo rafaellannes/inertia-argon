@@ -28,11 +28,7 @@
         aria-hidden="true"
         id="iconSidenav"
       ></i>
-      <a
-        class="navbar-brand m-0"
-        href=""
-        target="#"
-      >
+      <a class="navbar-brand m-0" href="" target="#">
         <img
           src="/assets/img/logo-ct-dark.png"
           class="navbar-brand-img h-100"
@@ -82,7 +78,47 @@
             <span class="nav-link-text ms-1">Prefeituras</span>
           </a>
         </li>
-       <!--  <li class="nav-item">
+        <li class="nav-item">
+          <a
+            data-bs-toggle="collapse"
+            href="#noticias"
+            class="nav-link collapsed"
+            aria-controls="noticias"
+            role="button"
+            aria-expanded="false"
+          >
+            <div
+              class="
+                icon icon-shape icon-sm
+                text-center
+                d-flex
+                align-items-center
+                justify-content-center
+              "
+            >
+              <i class="ni ni-ungroup text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Notícias</span>
+          </a>
+          <div class="collapse" id="noticias" style="">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span class="sidenav-mini-icon"> C </span>
+                  <span class="sidenav-normal"> Categorias </span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span class="sidenav-mini-icon"> N </span>
+                  <span class="sidenav-normal"> Notícias </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <!--  <li class="nav-item">
           <a class="nav-link" href="../pages/billing.html">
             <div
               class="

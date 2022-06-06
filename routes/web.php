@@ -45,5 +45,6 @@ Route::middleware([
 Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+   /*  Route::any('prefeituras/search', PrefeituraController::class, 'search')->name('prefeituras.search'); */
     Route::resource('prefeituras', PrefeituraController::class);
 });

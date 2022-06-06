@@ -22,28 +22,32 @@
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
-            <div class="card-header pb-0 d-flex">
-              <h6>Prefeituras</h6>
-              <button
-                class="btn btn-primary ms-auto"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                Novo <i class="fas fa-plus"></i>
-              </button>
-            </div>
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-8">
+                  <button class="btn btn-primary" @click="openModal()">
+                    Novo <i class="fas fa-plus"></i>
+                  </button>
+                </div>
 
-            <div class="row mx-2 my-0">
-              <div class="col-12">
-                <div class="input-group">
-                  <span class="input-group-text text-body"
-                    ><i class="fas fa-search" aria-hidden="true"></i
-                  ></span>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Pesquisar"
-                  />
+                <div class="col-4">
+                  <div class="input-group">
+                    <input
+                      v-model="filter"
+                      @keyup="search"
+                      type="text"
+                      class="form-control"
+                      placeholder="Pesquisar"
+                    />
+                    <span class="input-group-text text-body"
+                      ><i
+                        @click="search"
+                        class="fas fa-search"
+                        style="cursor: pointer"
+                        aria-hidden="true"
+                      ></i
+                    ></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -60,7 +64,16 @@
                           opacity-7
                         "
                       >
-                        Author
+                        #
+                      </th>
+                      <th
+                        class="
+                          text-uppercase text-secondary text-xxs
+                          font-weight-bolder
+                          opacity-7
+                        "
+                      >
+                        Descrição
                       </th>
                       <th
                         class="
@@ -70,7 +83,7 @@
                           ps-2
                         "
                       >
-                        Function
+                        Dominio
                       </th>
                       <th
                         class="
@@ -88,45 +101,61 @@
                           opacity-7
                         "
                       >
-                        Employed
+                        Data de criação
                       </th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr v-for="(pref, index) in prefeituras.data" :key="index">
                       <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img
-                              src="/assets/img/team-2.jpg"
-                              class="avatar avatar-sm me-3"
-                              alt="user1"
-                            />
-                          </div>
-                          <div
-                            class="d-flex flex-column justify-content-center"
-                          >
-                            <h6 class="mb-0 text-sm">John Michael</h6>
-                            <p class="text-xs text-secondary mb-0">
+                        <div class="px-4 py-1">
+                          <div class="justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ pref.id }}</h6>
+                            <!--        <p class="text-xs text-secondary mb-0">
                               john@creative-tim.com
-                            </p>
+                            </p> -->
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="px-4 py-1">
+                          <div class="justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ pref.descricao }}</h6>
+                            <!--        <p class="text-xs text-secondary mb-0">
+                              john@creative-tim.com
+                            </p> -->
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Organization</p>
+                        <p class="text-xs font-weight-bold mb-0">
+                          {{ pref.dominio }}
+                        </p>
+                        <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
                       </td>
-                      <td class="align-middle text-center text-sm">
+                      <td
+                        v-if="pref.ativo == 'Y'"
+                        class="align-middle text-center text-sm"
+                      >
                         <span class="badge badge-sm bg-gradient-success"
-                          >Online</span
+                          >Ativo</span
+                        >
+                      </td>
+
+                      <td
+                        v-if="pref.ativo == 'N'"
+                        class="align-middle text-center text-sm"
+                      >
+                        <span class="badge badge-sm bg-gradient-danger"
+                          >Inativo</span
                         >
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"
-                          >23/04/18</span
-                        >
+                        <span class="text-secondary text-xs font-weight-bold">{{
+                          pref.created_at
+                        }}</span>
                       </td>
                       <td class="align-middle">
                         <a
@@ -134,239 +163,25 @@
                           class="text-secondary font-weight-bold text-xs"
                           data-toggle="tooltip"
                           data-original-title="Edit user"
+                          @click.prevent="edit(pref)"
                         >
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img
-                              src="/assets/img/team-3.jpg"
-                              class="avatar avatar-sm me-3"
-                              alt="user2"
-                            />
-                          </div>
-                          <div
-                            class="d-flex flex-column justify-content-center"
-                          >
-                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                            <p class="text-xs text-secondary mb-0">
-                              alexa@creative-tim.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary"
-                          >Offline</span
-                        >
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"
-                          >11/01/19</span
-                        >
-                      </td>
-                      <td class="align-middle">
+                          Editar </a
+                        >|
                         <a
                           href="javascript:;"
                           class="text-secondary font-weight-bold text-xs"
-                          data-toggle="tooltip"
-                          data-original-title="Edit user"
+                          @click="deleteModal(pref)"
                         >
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img
-                              src="/assets/img/team-4.jpg"
-                              class="avatar avatar-sm me-3"
-                              alt="user3"
-                            />
-                          </div>
-                          <div
-                            class="d-flex flex-column justify-content-center"
-                          >
-                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                            <p class="text-xs text-secondary mb-0">
-                              laurent@creative-tim.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Executive</p>
-                        <p class="text-xs text-secondary mb-0">Projects</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success"
-                          >Online</span
-                        >
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"
-                          >19/09/17</span
-                        >
-                      </td>
-                      <td class="align-middle">
-                        <a
-                          href="javascript:;"
-                          class="text-secondary font-weight-bold text-xs"
-                          data-toggle="tooltip"
-                          data-original-title="Edit user"
-                        >
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img
-                              src="/assets/img/team-3.jpg"
-                              class="avatar avatar-sm me-3"
-                              alt="user4"
-                            />
-                          </div>
-                          <div
-                            class="d-flex flex-column justify-content-center"
-                          >
-                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                            <p class="text-xs text-secondary mb-0">
-                              michael@creative-tim.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programator</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success"
-                          >Online</span
-                        >
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"
-                          >24/12/08</span
-                        >
-                      </td>
-                      <td class="align-middle">
-                        <a
-                          href="javascript:;"
-                          class="text-secondary font-weight-bold text-xs"
-                          data-toggle="tooltip"
-                          data-original-title="Edit user"
-                        >
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img
-                              src="/assets/img/team-2.jpg"
-                              class="avatar avatar-sm me-3"
-                              alt="user5"
-                            />
-                          </div>
-                          <div
-                            class="d-flex flex-column justify-content-center"
-                          >
-                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                            <p class="text-xs text-secondary mb-0">
-                              richard@creative-tim.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                        <p class="text-xs text-secondary mb-0">Executive</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary"
-                          >Offline</span
-                        >
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"
-                          >04/10/21</span
-                        >
-                      </td>
-                      <td class="align-middle">
-                        <a
-                          href="javascript:;"
-                          class="text-secondary font-weight-bold text-xs"
-                          data-toggle="tooltip"
-                          data-original-title="Edit user"
-                        >
-                          Edit
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img
-                              src="/assets/img/team-4.jpg"
-                              class="avatar avatar-sm me-3"
-                              alt="user6"
-                            />
-                          </div>
-                          <div
-                            class="d-flex flex-column justify-content-center"
-                          >
-                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                            <p class="text-xs text-secondary mb-0">
-                              miriam@creative-tim.com
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                        <p class="text-xs text-secondary mb-0">Developer</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-secondary"
-                          >Offline</span
-                        >
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"
-                          >14/09/20</span
-                        >
-                      </td>
-                      <td class="align-middle">
-                        <a
-                          href="javascript:;"
-                          class="text-secondary font-weight-bold text-xs"
-                          data-toggle="tooltip"
-                          data-original-title="Edit user"
-                        >
-                          Edit
+                          Remover
                         </a>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+            </div>
+            <div class="card-footer">
+              <pagination :links="prefeituras.links"></pagination>
             </div>
           </div>
         </div>
@@ -377,94 +192,80 @@
   <!-- Modal -->
   <div
     class="modal fade"
-    id="exampleModal"
+    id="modalPrefeitura"
     tabindex="-1"
-    aria-labelledby="exampleModalLabel"
+    aria-labelledby="modalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Cadastro de Prefeitura
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="example-text-input" class="form-control-label"
-                  >Nome</label
+        <form @submit.prevent="checkMode">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">{{ formTitle }}</h5>
+            <span
+              style="cursor: pointer"
+              @click="closeModal"
+              aria-label="Close"
+              aria-hidden="true"
+              >×</span
+            >
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label"
+                    >Descrição</label
+                  >
+                  <input
+                    v-model="form.descricao"
+                    class="form-control"
+                    type="text"
+                    onfocus="focused(this)"
+                    onfocusout="defocused(this)"
+                    :class="{ 'is-invalid': form.errors.descricao }"
+                  />
+                </div>
+                <div
+                  class="invalid-feedback mb-3"
+                  :class="{ 'd-block': form.errors.descricao }"
                 >
-                <input
-                  class="form-control"
-                  type="text"
-                  value="Prefeitura London"
-                  onfocus="focused(this)"
-                  onfocusout="defocused(this)"
-                />
+                  {{ form.errors.descricao }}
+                </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="example-text-input" class="form-control-label"
-                  >E-mail Responsável</label
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label"
+                    >Domínio</label
+                  >
+                  <input
+                    v-model="form.dominio"
+                    class="form-control"
+                    type="text"
+                    onfocus="focused(this)"
+                    onfocusout="defocused(this)"
+                    :class="{ 'is-invalid': form.errors.dominio }"
+                  />
+                </div>
+                <div
+                  class="invalid-feedback mb-3"
+                  :class="{ 'd-block': form.errors.dominio }"
                 >
-                <input
-                  class="form-control"
-                  type="email"
-                  value="admin@example.com"
-                  onfocus="focused(this)"
-                  onfocusout="defocused(this)"
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="example-text-input" class="form-control-label"
-                  >Domínio</label
-                >
-                <input
-                  class="form-control"
-                  type="text"
-                  value="london.enjoy.app"
-                  onfocus="focused(this)"
-                  onfocusout="defocused(this)"
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="example-text-input" class="form-control-label"
-                  >Nonme Responsável</label
-                >
-                <input
-                  class="form-control"
-                  type="text"
-                  value="Lucky"
-                  onfocus="focused(this)"
-                  onfocusout="defocused(this)"
-                />
+                  {{ form.errors.dominio }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Fechar
-          </button>
-          <button type="button" class="btn btn-success">Salvar</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="closeModal">
+              Fechar
+            </button>
+            <button type="submit" class="btn btn-success">
+              {{ buttonTxt }}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -472,20 +273,121 @@
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout";
+import Pagination from "@/Components/Pagination";
 
 export default {
+  props: ["prefeituras"],
   components: {
     AdminLayout,
+    Pagination,
   },
 
   data() {
     return {
-      methods: {
-        openModal() {
-          console.log("clicou");
-        },
-      },
+      modal: Object,
+
+      filter: "",
+      editMode: false,
+      form: this.$inertia.form({
+        id: "",
+        descricao: "",
+        dominio: "",
+      }),
     };
+  },
+  computed: {
+    formTitle() {
+      return this.editMode === false
+        ? "Adicionar Prefeitura"
+        : "Editar Prefeitura";
+    },
+    buttonTxt() {
+      return this.editMode === false ? "Salvar" : "Editar";
+    },
+    checkMode() {
+      return this.editMode === false ? this.create : this.update;
+    },
+  },
+
+  methods: {
+    openModal() {
+      this.form.clearErrors();
+      this.modal.show();
+      this.form.reset();
+    },
+
+    closeModal() {
+      this.modal.hide();
+      this.form.clearErrors();
+      this.editMode = false;
+    },
+
+    create() {
+      this.form.post(this.route("admin.prefeituras.store"), {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.closeModal();
+          this.form.reset();
+        },
+      });
+    },
+
+    edit(pref) {
+      this.editMode = true;
+      this.openModal();
+      this.form = Object.assign(this.form, pref);
+    },
+
+    update() {
+      this.form.patch(
+        this.route("admin.prefeituras.update", this.form.id, this.form),
+        {
+          preserveScroll: true,
+          onSuccess: () => {
+            this.closeModal();
+            this.form.reset();
+          },
+        }
+      );
+    },
+
+    search() {
+      this.$inertia.get(
+        route("admin.prefeituras.index"),
+        {
+          filter: this.filter,
+        },
+        { preserveState: true }
+      );
+    },
+
+    deleteModal(pref) {
+      Swal.fire({
+        title: "Tem certeza que deseja deletar?",
+        text: "Você não será capaz de reverter essa ação!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, deletar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.form.delete(this.route("admin.prefeituras.destroy", pref), {
+            preserveScroll: true,
+            onSuccess: () => {
+              Swal.fire("Deletado!", "Prefeitura deletada", "success");
+            },
+          });
+        }
+      });
+    },
+  },
+
+  mounted() {
+    this.modal = new bootstrap.Modal(
+      document.getElementById("modalPrefeitura"),
+      {}
+    );
   },
 };
 </script>

@@ -31,7 +31,7 @@
     @inertia
 
     @env('local')
-    <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
+    {{-- <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script> --}}
     @endenv
 
 </body>
@@ -53,5 +53,7 @@
 <script type="application/javascript" src="{{ asset('/js/argon/argon-dashboard.js?v=2.0.2') }}" defer></script>
 <script type="application/javascript" src="{{ asset('/js/argon/plugins/perfect-scrollbar.min.js') }}"></script>
 <script type="application/javascript" src="{{ asset('/js/argon/plugins/smooth-scrollbar.min.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </html>

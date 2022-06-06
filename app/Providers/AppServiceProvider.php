@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\{
+    Prefeitura
+};
+use App\Observers\{
+    PrefeituraObserver
+};
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Prefeitura::observe(PrefeituraObserver::class);
     }
 }

@@ -3,3 +3,6 @@
 /* @import '~bootstrap/scss/bootstrap'; */
 /* @import "custom";
  */
+.modal {
+  z-index: 99999999999999 !important;
+}

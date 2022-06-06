@@ -1,6 +1,5 @@
 <template>
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-
   <!-- Sidebar -->
   <Sidebar />
   <!-- End Sidebar -->
@@ -15,7 +14,11 @@
 
     <div class="container-fluid py-4">
       <!--Content-->
+
+      <flash-message v-if="$page.props.flash"></flash-message>
+
       <slot name="content"></slot>
+
       <!--End Content-->
 
       <!----footer-->
@@ -174,11 +177,13 @@
 import Footer from "@/Components/Footer";
 import Navbar from "@/Components/Navbar";
 import Sidebar from "@/Components/Sidebar";
+import FlashMessage from "@/Components/FlashMessage";
 export default {
   components: {
     Footer,
     Navbar,
     Sidebar,
+    FlashMessage,
   },
 };
 </script>
