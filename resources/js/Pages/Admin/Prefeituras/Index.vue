@@ -94,6 +94,16 @@
                       >
                         Status
                       </th>
+
+                      <th
+                        class="
+                          text-center text-uppercase text-secondary text-xxs
+                          font-weight-bolder
+                          opacity-7
+                        "
+                      >
+                        Usuários
+                      </th>
                       <th
                         class="
                           text-center text-uppercase text-secondary text-xxs
@@ -151,6 +161,14 @@
                         <span class="badge badge-sm bg-gradient-danger"
                           >Inativo</span
                         >
+                      </td>
+
+                      <td class="align-middle text-center">
+                        <i
+                          style="cursor: pointer"
+                          @click="viewUsuarios(pref)"
+                          class="fas fa-user-plus text-primary"
+                        ></i>
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{
@@ -274,12 +292,14 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout";
 import Pagination from "@/Components/Pagination";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
   props: ["prefeituras"],
   components: {
     AdminLayout,
     Pagination,
+    Link,
   },
 
   data() {
@@ -381,6 +401,10 @@ export default {
           });
         }
       });
+    },
+
+    viewUsuarios(pref) {
+      this.$inertia.get(route("admin.prefeitura.usuarios.index", pref.uuid));
     },
   },
 

@@ -59,7 +59,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">
+         <Link :href="route('admin.prefeituras.index')" class="nav-link" :class="route().current('admin.prefeituras.*') ? 'active' : ' '">
             <div
               class="
                 icon icon-shape icon-sm
@@ -76,7 +76,7 @@
               ></i>
             </div>
             <span class="nav-link-text ms-1">Prefeituras</span>
-          </a>
+          </Link>
         </li>
         <li class="nav-item">
           <a
@@ -103,10 +103,10 @@
           <div class="collapse" id="noticias" style="">
             <ul class="nav ms-4">
               <li class="nav-item">
-                <a class="nav-link" href="#">
+               <Link :href="route('admin.noticias-categoria.index')" class="nav-link" :class="route().current('admin.noticias-categoria.*') ? 'active' : ' '">
                   <span class="sidenav-mini-icon"> C </span>
                   <span class="sidenav-normal"> Categorias </span>
-                </a>
+                </Link>
               </li>
 
               <li class="nav-item">
@@ -259,4 +259,11 @@
   </aside>
 </template>
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
+
+export default {
+  components: {
+    Link,
+  },
+};
 </script>

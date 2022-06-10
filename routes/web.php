@@ -9,6 +9,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\Admin\{
     DashboardController,
     PrefeituraController,
+    NoticiaCategoriaController,
+    UserController,
 };
 
 /*
@@ -45,6 +47,9 @@ Route::middleware([
 Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-   /*  Route::any('prefeituras/search', PrefeituraController::class, 'search')->name('prefeituras.search'); */
+
+    Route::get('prefeituras/{uuid}/usuarios', [UserController::class, 'index'])->name('prefeitura.usuarios.index');
     Route::resource('prefeituras', PrefeituraController::class);
+
+    Route::resource('noticias-categoria', NoticiaCategoriaController::class);
 });
