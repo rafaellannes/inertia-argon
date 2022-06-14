@@ -51,7 +51,7 @@ class NoticiaCategoriaController extends Controller
     public function store(NoticiaCategoriaStoreUpdate $request)
     {
         $data = $request->all();
-        $data['prefeitura_id'] = 1; //REVER LOGICA
+
         $categoria = $this->noticiaCategoria->create($data);
 
         return redirect()->route('admin.noticias-categoria.index')->with('success', "{$categoria->descricao} cadastrada com sucesso!");
@@ -79,26 +79,22 @@ class NoticiaCategoriaController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(NoticiaCategoriaStoreUpdate $request, $id)
     {
-        //
+        $categoria = $this->noticiaCategoria->findOrFail($id);
+
+        $categoria->update($request->all());
+
+        return redirect()->route('admin.noticias-categoria.index')->with('success', "{$categoria->descricao} editada com sucesso!");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $categoria = $this->noticiaCategoria->findOrFail($id);
+        if ($categoria)
+            $categoria->delete();
+
+        return redirect()->route('admin.noticias-categoria.index');
     }
 }

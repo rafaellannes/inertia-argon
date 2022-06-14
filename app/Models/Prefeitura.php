@@ -16,4 +16,9 @@ class Prefeitura extends Model
     protected $casts = [
         'created_at' => 'date:d-m-Y',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

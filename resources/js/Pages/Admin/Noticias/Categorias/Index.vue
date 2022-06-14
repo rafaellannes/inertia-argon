@@ -271,10 +271,10 @@ export default {
       });
     },
 
-    edit(pref) {
+    edit(cat) {
       this.openModal();
       this.editMode = true;
-      this.form = Object.assign(this.form, pref);
+      this.form = Object.assign(this.form, cat);
     },
 
     update() {

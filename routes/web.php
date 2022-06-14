@@ -26,15 +26,16 @@ use App\Http\Controllers\Admin\{
 
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return redirect('/admin/dashboard');
+    /*     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-    ]);
+    ]); */
 });
 
-Route::middleware([
+/* Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
@@ -42,17 +43,21 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-});
+}); */
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
+    //**ROTA DE CADASTRO DE USUÁRIO - ADMIN*/
     Route::get('prefeituras/usuarios', [UserController::class, 'index'])->name('prefeitura.usuarios.index');
     Route::post('prefeituras/usuarios', [UserController::class, 'store'])->name('prefeitura.usuarios.store');
     Route::patch('prefeituras/usuarios/{prefeitura}', [UserController::class, 'update'])->name('prefeitura.usuarios.update');
+    //**ROTA DE CADASTRO DE USUÁRIO - ADMIN*/
+
+    //ROTA DE PREFEITURA - ADMIN
     Route::resource('prefeituras', PrefeituraController::class);
 
-
+    //NOTICIAS
     Route::resource('noticias-categoria', NoticiaCategoriaController::class);
 });
