@@ -59,7 +59,11 @@
           </a>
         </li>
         <li class="nav-item">
-         <Link :href="route('admin.prefeituras.index')" class="nav-link" :class="route().current('admin.prefeituras.*') ? 'active' : ' '">
+          <Link
+            :href="route('admin.prefeituras.index')"
+            class="nav-link"
+            :class="route().current('admin.prefeituras.*') ? 'active' : ' '"
+          >
             <div
               class="
                 icon icon-shape icon-sm
@@ -103,17 +107,33 @@
           <div class="collapse" id="noticias" style="">
             <ul class="nav ms-4">
               <li class="nav-item">
-               <Link :href="route('admin.noticias-categoria.index')" class="nav-link" :class="route().current('admin.noticias-categoria.*') ? 'active' : ' '">
+                <Link
+                  :href="route('admin.noticias-categoria.index')"
+                  class="nav-link"
+                  :class="
+                    route().current('admin.noticias-categoria.*')
+                      ? 'active'
+                      : ' '
+                  "
+                >
                   <span class="sidenav-mini-icon"> C </span>
                   <span class="sidenav-normal"> Categorias </span>
                 </Link>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <Link
+                  :class="
+                    route().current('admin.noticias.*')
+                      ? 'active'
+                      : ' '
+                  "
+                  class="nav-link"
+                  :href="route('admin.noticias.index')"
+                >
                   <span class="sidenav-mini-icon"> N </span>
                   <span class="sidenav-normal"> Notícias </span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -15,6 +15,12 @@ class CreateNoticiasTable extends Migration
     {
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
+            $table->string('titulo');
+            $table->text('descricao');
+            $table->foreignId('prefeitura_id')->constrained('prefeituras');
+            $table->foreignId('noticia_categoria_id')->constrained('noticia_categorias');
+            $table->foreignId('user_id')->constrained('users');
+
             $table->timestamps();
         });
     }

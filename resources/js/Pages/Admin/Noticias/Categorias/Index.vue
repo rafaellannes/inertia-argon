@@ -300,7 +300,7 @@ export default {
       );
     },
 
-    deleteModal(pref) {
+    deleteModal(cat) {
       Swal.fire({
         title: "Tem certeza que deseja deletar?",
         text: "Você não será capaz de reverter essa ação!",
@@ -312,11 +312,11 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.form.delete(
-            this.route("admin.noticias-categoria.destroy", pref),
+            this.route("admin.noticias-categoria.destroy", cat),
             {
               preserveScroll: true,
               onSuccess: () => {
-                Swal.fire("Deletado!", "Prefeitura deletada", "success");
+                Swal.fire("Deletado!", "Categoria deletada", "success");
               },
             }
           );

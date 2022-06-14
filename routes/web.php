@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\{
     DashboardController,
     PrefeituraController,
     NoticiaCategoriaController,
+    NoticiaController,
     UserController,
 };
 
@@ -60,4 +61,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
 
     //NOTICIAS
     Route::resource('noticias-categoria', NoticiaCategoriaController::class);
+    Route::resource('noticias', NoticiaController::class);
 });

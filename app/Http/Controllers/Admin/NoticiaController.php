@@ -3,62 +3,53 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\NoticiaStoreUpdateRequest;
+use App\Models\Noticia;
+use App\Models\NoticiaCategoria;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class NoticiaController extends Controller
 {
+    protected $noticia;
+    protected $categoria;
+
+    public function __construct(Noticia $noticia, NoticiaCategoria $categoria)
+    {
+        $this->noticia = $noticia;
+        $this->categoria = $categoria;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $categorias = $this->categoria->all();
+
+        $noticias = $this->noticia::when($request->filter, function ($query, $filter) {
+            $query->where('titulo', 'LIKE', '%' . $filter . '%');
+        })->with('categoria')->latest()->paginate()->withQueryString();
+
+        return Inertia::render('Admin/Noticias/Index', [
+            'noticias' => $noticias,
+            'categorias' => $categorias,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function store(NoticiaStoreUpdateRequest $request)
     {
-        //
+        $request->merge([
+            'user_id' => auth()->id(),
+        ]);
+
+        $noticia = $this->noticia->create($request->all());
+
+        return redirect()->route('admin.noticias.index')->with('success', "{$noticia->titulo} cadastrada com sucesso!");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +58,13 @@ class NoticiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NoticiaStoreUpdateRequest $request, $id)
     {
-        //
+        $noticia = $this->noticia->findOrFail($id);
+
+        $noticia->update($request->all());
+
+        return redirect()->route('admin.noticias.index')->with('success', "{$noticia->titulo} atualizada com sucesso!");
     }
 
     /**
@@ -80,6 +75,10 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $noticia = $this->noticia->findOrFail($id);
+
+        $noticia->delete();
+
+        return redirect()->route('admin.noticias.index')->with('success', "{$noticia->titulo} excluída com sucesso!");
     }
 }
