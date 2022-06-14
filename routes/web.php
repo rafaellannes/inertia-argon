@@ -48,8 +48,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('prefeituras/{uuid}/usuarios', [UserController::class, 'index'])->name('prefeitura.usuarios.index');
+    Route::get('prefeituras/usuarios', [UserController::class, 'index'])->name('prefeitura.usuarios.index');
+    Route::post('prefeituras/usuarios', [UserController::class, 'store'])->name('prefeitura.usuarios.store');
+    Route::patch('prefeituras/usuarios/{prefeitura}', [UserController::class, 'update'])->name('prefeitura.usuarios.update');
     Route::resource('prefeituras', PrefeituraController::class);
+
 
     Route::resource('noticias-categoria', NoticiaCategoriaController::class);
 });

@@ -13,13 +13,15 @@
           class="breadcrumb-item text-sm text-white active"
           aria-current="page"
         >
-          Usuários
+          Usuários / {{ prefeitura.descricao }}
         </li>
       </ol>
     </template>
 
     <template v-slot:header>
-      <h5 class="font-weight-bolder text-white mt-4 mb-0">Usuários</h5>
+      <h5 class="font-weight-bolder text-white mt-4 mb-0">
+        Usuários - {{ prefeitura.descricao }}
+      </h5>
     </template>
 
     <template #content>
@@ -77,7 +79,7 @@
                           opacity-7
                         "
                       >
-                        Descrição
+                        Nome
                       </th>
                       <th
                         class="
@@ -87,27 +89,9 @@
                           ps-2
                         "
                       >
-                        Dominio
-                      </th>
-                      <th
-                        class="
-                          text-center text-uppercase text-secondary text-xxs
-                          font-weight-bolder
-                          opacity-7
-                        "
-                      >
-                        Status
+                        E-mail
                       </th>
 
-                      <th
-                        class="
-                          text-center text-uppercase text-secondary text-xxs
-                          font-weight-bolder
-                          opacity-7
-                        "
-                      >
-                        Usuários
-                      </th>
                       <th
                         class="
                           text-center text-uppercase text-secondary text-xxs
@@ -121,14 +105,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(pref, index) in prefeituras.data" :key="index">
+                        <tr v-for="(user, index) in users.data" :key="index">
                       <td>
                         <div class="px-4 py-1">
                           <div class="justify-content-center">
-                            <h6 class="mb-0 text-sm">{{ pref.id }}</h6>
-                            <!--        <p class="text-xs text-secondary mb-0">
-                              john@creative-tim.com
-                            </p> -->
+                            <h6 class="mb-0 text-sm">{{ user.id }}</h6>
+
                           </div>
                         </div>
                       </td>
@@ -136,46 +118,25 @@
                       <td>
                         <div class="px-4 py-1">
                           <div class="justify-content-center">
-                            <h6 class="mb-0 text-sm">{{ pref.descricao }}</h6>
-                            <!--        <p class="text-xs text-secondary mb-0">
-                              john@creative-tim.com
-                            </p> -->
+                            <h6 class="mb-0 text-sm">{{ user.name }}</h6>
+
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0">
-                          {{ pref.dominio }}
-                        </p>
-                        <!-- <p class="text-xs text-secondary mb-0">Organization</p> -->
-                      </td>
-                      <td
-                        v-if="pref.ativo == 'Y'"
-                        class="align-middle text-center text-sm"
-                      >
-                        <span class="badge badge-sm bg-gradient-success"
-                          >Ativo</span
-                        >
+
+                            <td>
+                        <div class="px-4 py-1">
+                          <div class="justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ user.email }}</h6>
+
+                          </div>
+                        </div>
                       </td>
 
-                      <td
-                        v-if="pref.ativo == 'N'"
-                        class="align-middle text-center text-sm"
-                      >
-                        <span class="badge badge-sm bg-gradient-danger"
-                          >Inativo</span
-                        >
-                      </td>
 
-                      <td class="align-middle text-center">
-                        <i
-                          style="cursor: pointer"
-                          class="fas fa-user-plus text-primary"
-                        ></i>
-                      </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{
-                          pref.created_at
+                          user.created_at
                         }}</span>
                       </td>
                       <td class="align-middle">
@@ -184,17 +145,17 @@
                           class="text-secondary font-weight-bold text-xs"
                           data-toggle="tooltip"
                           data-original-title="Edit user"
-                          @click.prevent="edit(pref)"
+                          @click.prevent="edit(user)"
                         >
                           Editar </a
-                        >|
+                        ><!-- |
                         <a
                           href="javascript:;"
                           class="text-secondary font-weight-bold text-xs"
-                          @click="deleteModal(pref)"
+                          @click="deleteModal(user)"
                         >
                           Remover
-                        </a>
+                        </a> -->
                       </td>
                     </tr>
                   </tbody>
@@ -202,7 +163,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <pagination :links="prefeituras.links"></pagination>
+              <pagination :links="users.links"></pagination>
             </div>
           </div>
         </div>
@@ -232,49 +193,91 @@
             >
           </div>
           <div class="modal-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >Descrição</label
-                  >
-                  <input
-                    v-model="form.descricao"
-                    class="form-control"
-                    type="text"
-                    onfocus="focused(this)"
-                    onfocusout="defocused(this)"
-                    :class="{ 'is-invalid': form.errors.descricao }"
-                  />
-                </div>
-                <div
-                  class="invalid-feedback mb-3"
-                  :class="{ 'd-block': form.errors.descricao }"
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label"
+                  >Nome</label
                 >
-                  {{ form.errors.descricao }}
-                </div>
+                <input
+                  v-model="form.name"
+                  class="form-control"
+                  type="text"
+                  onfocus="focused(this)"
+                  onfocusout="defocused(this)"
+                  :class="{ 'is-invalid': form.errors.name }"
+                />
               </div>
+              <div
+                class="invalid-feedback mb-3"
+                :class="{ 'd-block': form.errors.name }"
+              >
+                {{ form.errors.name }}
+              </div>
+            </div>
 
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="example-text-input" class="form-control-label"
-                    >Domínio</label
-                  >
-                  <input
-                    v-model="form.dominio"
-                    class="form-control"
-                    type="text"
-                    onfocus="focused(this)"
-                    onfocusout="defocused(this)"
-                    :class="{ 'is-invalid': form.errors.dominio }"
-                  />
-                </div>
-                <div
-                  class="invalid-feedback mb-3"
-                  :class="{ 'd-block': form.errors.dominio }"
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label"
+                  >E-mail</label
                 >
-                  {{ form.errors.dominio }}
-                </div>
+                <input
+                  v-model="form.email"
+                  class="form-control"
+                  type="email"
+                  onfocus="focused(this)"
+                  onfocusout="defocused(this)"
+                  :class="{ 'is-invalid': form.errors.email }"
+                />
+              </div>
+              <div
+                class="invalid-feedback mb-3"
+                :class="{ 'd-block': form.errors.email }"
+              >
+                {{ form.errors.email }}
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label"
+                  >Senha</label
+                >
+                <input
+                  v-model="form.password"
+                  class="form-control"
+                  type="password"
+                  onfocus="focused(this)"
+                  onfocusout="defocused(this)"
+                  :class="{ 'is-invalid': form.errors.password }"
+                />
+              </div>
+              <div
+                class="invalid-feedback mb-3"
+                :class="{ 'd-block': form.errors.password }"
+              >
+                {{ form.errors.password }}
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label"
+                  >Confirmar Senha</label
+                >
+                <input
+                  v-model="form.checkPassword"
+                  class="form-control"
+                  type="password"
+                  onfocus="focused(this)"
+                  onfocusout="defocused(this)"
+                  :class="{ 'is-invalid': form.errors.checkPassword }"
+                />
+              </div>
+              <div
+                class="invalid-feedback mb-3"
+                :class="{ 'd-block': form.errors.checkPassword }"
+              >
+                {{ form.errors.checkPassword }}
               </div>
             </div>
           </div>
@@ -282,7 +285,7 @@
             <button type="button" class="btn btn-secondary" @click="closeModal">
               Fechar
             </button>
-            <button type="submit" class="btn btn-success">
+            <button v-if="form.password === form.checkPassword" type="submit" class="btn btn-success">
               {{ buttonTxt }}
             </button>
           </div>
@@ -297,7 +300,7 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import Pagination from "@/Components/Pagination";
 
 export default {
-  props: ["prefeituras"],
+  props: ["prefeitura", "users"],
   components: {
     AdminLayout,
     Pagination,
@@ -311,16 +314,17 @@ export default {
       editMode: false,
       form: this.$inertia.form({
         id: "",
-        descricao: "",
-        dominio: "",
+        name: "",
+        email: "",
+        password: null,
+        checkPassword: null,
+        uuid: this.prefeitura.uuid,
       }),
     };
   },
   computed: {
     formTitle() {
-      return this.editMode === false
-        ? "Adicionar Prefeitura"
-        : "Editar Prefeitura";
+      return this.editMode === false ? "Adicionar Usuário" : "Editar Usuário";
     },
     buttonTxt() {
       return this.editMode === false ? "Salvar" : "Editar";
@@ -345,7 +349,7 @@ export default {
     },
 
     create() {
-      this.form.post(this.route("admin.prefeituras.store"), {
+      this.form.post(this.route("admin.prefeitura.usuarios.store"), {
         preserveScroll: true,
         onSuccess: () => {
           this.closeModal();
@@ -354,15 +358,15 @@ export default {
       });
     },
 
-    edit(pref) {
+    edit(user) {
       this.openModal();
       this.editMode = true;
-      this.form = Object.assign(this.form, pref);
+      this.form = Object.assign(this.form, user);
     },
 
     update() {
       this.form.patch(
-        this.route("admin.prefeituras.update", this.form.id, this.form),
+        this.route("admin.prefeitura.usuarios.update", this.form.id, this.form),
         {
           preserveScroll: true,
           onSuccess: () => {
@@ -375,9 +379,10 @@ export default {
 
     search() {
       this.$inertia.get(
-        route("admin.prefeituras.index"),
+        route("admin.prefeitura.usuarios.index"),
         {
           filter: this.filter,
+          uuid: this.form.uuid,
         },
         { preserveState: true }
       );

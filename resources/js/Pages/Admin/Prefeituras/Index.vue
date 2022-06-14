@@ -164,11 +164,18 @@
                       </td>
 
                       <td class="align-middle text-center">
-                        <i
-                          style="cursor: pointer"
-                          @click="viewUsuarios(pref)"
-                          class="fas fa-user-plus text-primary"
-                        ></i>
+                        <Link
+                          :href="
+                            route('admin.prefeitura.usuarios.index', {
+                              uuid: pref.uuid,
+                            })
+                          "
+                        >
+                          <i
+                            style="cursor: pointer"
+                            class="fas fa-user-plus text-primary"
+                          ></i>
+                        </Link>
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold">{{
@@ -401,10 +408,6 @@ export default {
           });
         }
       });
-    },
-
-    viewUsuarios(pref) {
-      this.$inertia.get(route("admin.prefeitura.usuarios.index", pref.uuid));
     },
   },
 

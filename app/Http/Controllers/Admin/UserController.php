@@ -3,42 +3,42 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserStoreUpdateRequest;
 use App\Models\Prefeitura;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
     protected $prefeitura;
+    protected $user;
 
-    public function __construct(Prefeitura $prefeitura)
+    public function __construct(Prefeitura $prefeitura, User $user)
     {
         $this->prefeitura = $prefeitura;
+        $this->user = $user;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($uuid, Request $request = null)
+    public function index(Request $request)
     {
-        dd($uuid);
+        $pref = $this->prefeitura->where('uuid', $request->uuid)->first();
+
+        if (!$pref)
+            return redirect()->back();
+
         return Inertia::render('Admin/Prefeituras/Usuarios/Index', [
-            'prefeituras' => [],/* $this->prefeitura::when($request->filter, function ($query, $filter) {
-                $query->where('descricao', 'LIKE', '%' . $filter . '%');
-            })->latest()->paginate()->withQueryString(), */
+            'prefeitura' => $pref,
+            'users' => $this->user::when($request->filter, function ($query, $filter) {
+                $query->where('name', 'LIKE', '%' . $filter . '%');
+            })->where('prefeitura_id', $pref->id)->latest()->paginate()->withQueryString(),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -46,32 +46,22 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreUpdateRequest $request)
     {
-        //
+        $pref = $this->prefeitura->where('uuid', $request->uuid)->first();
+
+        if (!$pref)
+            return redirect()->back();
+
+        $data = $request->all();
+        $data['prefeitura_id'] = $pref->id;
+        $data['password'] = bcrypt($data['password']);
+
+        $user = $this->user->create($data);
+
+        return redirect()->route('admin.prefeitura.usuarios.index', ["uuid" => $pref->uuid])->with('success', "{$user->name} cadastrada com sucesso!");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -80,9 +70,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserStoreUpdateRequest $request, $id)
     {
-        //
+        $user = $this->user->findOrFail($id);
+        $pref = $this->prefeitura->where('uuid', $request->uuid)->first();
+
+        if (!$pref)
+            return redirect()->back();
+
+        $data = $request->only('name', 'email');
+
+        if ($request->password) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.prefeitura.usuarios.index', ["uuid" => $pref->uuid])->with('success', "{$user->name} alterado com sucesso!");
     }
 
     /**

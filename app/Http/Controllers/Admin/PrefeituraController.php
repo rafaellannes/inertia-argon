@@ -48,4 +48,9 @@ class PrefeituraController extends Controller
 
         return redirect()->route('admin.prefeituras.index');
     }
+
+  /*   public function show($id)
+    {
+
+    } */
 }
