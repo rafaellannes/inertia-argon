@@ -20,4 +20,9 @@ class ServicoCategoria extends Model
     {
         return $this->belongsTo(Icone::class);
     }
+
+    public function subcategorias()
+    {
+        return $this->hasMany(ServicoSubcategoria::class, 'categoria_id');
+    }
 }

@@ -24,6 +24,11 @@ class IconesSeeder extends Seeder
                 'icone' => 'e838',
                 'link_img' => '/assets/img/icons/star.png',
             ],
+
+            [
+                'descricao' => 'home',
+                'link_img' => '/assets/img/icons/home.png',
+            ],
         ];
 
         foreach ($icones as $icone) {

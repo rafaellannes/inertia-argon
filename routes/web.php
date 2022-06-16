@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\{
     NoticiaController,
     UserController,
     ServicoCategoriaController,
+    SubCategoriaController
 };
 
 /*
@@ -66,5 +67,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
 
     //SERVIÇOS
     Route::resource('servicos-categoria', ServicoCategoriaController::class);
+    Route::resource('subcategorias', SubCategoriaController::class);
 
 });

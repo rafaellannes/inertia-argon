@@ -16,7 +16,7 @@ class CreateIconesTable extends Migration
         Schema::create('icones', function (Blueprint $table) {
             $table->id();
             $table->string('descricao');
-            $table->string('icone');
+            $table->string('icone')->nullable();
             $table->string('link_img');
             $table->timestamps();
         });

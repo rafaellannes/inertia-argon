@@ -239,7 +239,7 @@
                     >Ícone</label
                   >
 
-                   <multiselect
+                  <multiselect
                     v-model="form.icone"
                     placeholder="Selecione um ícone"
                     label="descricao"
@@ -299,9 +299,9 @@
                 </div>
                 <div
                   class="invalid-feedback mb-3"
-                  :class="{ 'd-block': form.errors.icone_id }"
+                  :class="{ 'd-block': form.errors.icone }"
                 >
-                  {{ form.errors.icone_id }}
+                  {{ form.errors.icone }}
                 </div>
               </div>
             </div>
@@ -393,7 +393,7 @@ export default {
 
     update() {
       this.form.patch(
-        this.route("admin.noticias-categoria.update", this.form.id, this.form),
+        this.route("admin.servicos-categoria.update", this.form.id, this.form),
         {
           preserveScroll: true,
           onSuccess: () => {
@@ -406,7 +406,7 @@ export default {
 
     search() {
       this.$inertia.get(
-        route("admin.noticias-categoria.index"),
+        route("admin.servicos-categoria.index"),
         {
           filter: this.filter,
         },
@@ -426,7 +426,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.form.delete(
-            this.route("admin.noticias-categoria.destroy", cat),
+            this.route("admin.servicos-categoria.destroy", cat),
             {
               preserveScroll: true,
               onSuccess: () => {

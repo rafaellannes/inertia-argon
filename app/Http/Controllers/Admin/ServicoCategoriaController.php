@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ServicoCategoriaStoreUpdate;
 use App\Models\Icone;
 use App\Models\ServicoCategoria;
 use Illuminate\Http\Request;
@@ -41,43 +42,29 @@ class ServicoCategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServicoCategoriaStoreUpdate $request)
     {
-        dd($request->all());
+
+        $data = $request->only('descricao');
+
+        $data['icone_id'] = $request->icone['id'];
+        $categoria = $this->categoria->create($data);
+
+        return redirect()->route('admin.servicos-categoria.index')->with('success', "{$categoria->descricao} cadastrada com sucesso!");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+
+        $categoria = $this->categoria->findOrFail($id);
+
+        $data = $request->only('descricao');
+        $data['icone_id'] = $request->icone['id'];
+
+        $categoria->update($data);
+
+        return redirect()->route('admin.servicos-categoria.index')->with('success', "{$categoria->descricao} atualizada com sucesso!");
     }
 
     /**
@@ -88,6 +75,10 @@ class ServicoCategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categoria = $this->categoria->findOrFail($id);
+
+        $categoria->delete();
+
+        return redirect()->route('admin.servicos-categoria.index');
     }
 }

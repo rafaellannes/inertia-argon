@@ -176,10 +176,10 @@
 
               <li class="nav-item">
                 <Link
-                  :href="route('admin.noticias-categoria.index')"
+                  :href="route('admin.subcategorias.index')"
                   class="nav-link"
                   :class="
-                    route().current('admin.noticias-categoria.*')
+                    route().current('admin.subcategorias.*')
                       ? 'active'
                       : ' '
                   "
