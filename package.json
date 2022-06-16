@@ -34,6 +34,7 @@
     },
     "dependencies": {
         "@babel/core": "^7.17.10",
-        "@babel/plugin-transform-runtime": "^7.17.10"
+        "@babel/plugin-transform-runtime": "^7.17.10",
+        "vue-multiselect": "^3.0.0-alpha.2"
     }
 }

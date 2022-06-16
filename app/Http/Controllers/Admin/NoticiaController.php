@@ -79,6 +79,6 @@ class NoticiaController extends Controller
 
         $noticia->delete();
 
-        return redirect()->route('admin.noticias.index')->with('success', "{$noticia->titulo} excluída com sucesso!");
+        return redirect()->route('admin.noticias.index');
     }
 }

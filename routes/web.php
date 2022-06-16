@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\{
     NoticiaCategoriaController,
     NoticiaController,
     UserController,
+    ServicoCategoriaController,
 };
 
 /*
@@ -62,4 +63,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
     //NOTICIAS
     Route::resource('noticias-categoria', NoticiaCategoriaController::class);
     Route::resource('noticias', NoticiaController::class);
+
+    //SERVIÇOS
+    Route::resource('servicos-categoria', ServicoCategoriaController::class);
+
 });
