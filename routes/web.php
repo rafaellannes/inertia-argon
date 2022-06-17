@@ -12,8 +12,10 @@ use App\Http\Controllers\Admin\{
     NoticiaCategoriaController,
     NoticiaController,
     UserController,
+    UserTenantController,
     ServicoCategoriaController,
-    SubCategoriaController
+    SubCategoriaController,
+
 };
 
 /*
@@ -50,7 +52,7 @@ Route::get('/', function () {
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function () {
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //**ROTA DE CADASTRO DE USUÁRIO - ADMIN*/
     Route::get('prefeituras/usuarios', [UserController::class, 'index'])->name('prefeitura.usuarios.index');
@@ -68,5 +70,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
     //SERVIÇOS
     Route::resource('servicos-categoria', ServicoCategoriaController::class);
     Route::resource('subcategorias', SubCategoriaController::class);
+
+    //USUÁRIOS - USUARIOS TENANT(PREFEITURA)
+    Route::resource('usuarios', UserTenantController::class);
 
 });
