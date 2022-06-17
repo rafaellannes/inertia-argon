@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,32 +14,22 @@ use App\Http\Controllers\Admin\{
     UserTenantController,
     ServicoCategoriaController,
     SubCategoriaController,
-
+    TagController,
+    ServicoController,
 };
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-
-Route::get('/', function () {
+/* Route::get('/', function () {
     return redirect('/admin/dashboard');
-    /*     return Inertia::render('Welcome', [
+        return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-    ]); */
+    ]);
 });
 
-/* Route::middleware([
+Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
@@ -70,8 +59,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
     //SERVIÇOS
     Route::resource('servicos-categoria', ServicoCategoriaController::class);
     Route::resource('subcategorias', SubCategoriaController::class);
+    Route::resource('tags', TagController::class);
+    Route::resource('servicos', ServicoController::class);
 
     //USUÁRIOS - USUARIOS TENANT(PREFEITURA)
     Route::resource('usuarios', UserTenantController::class);
-
 });

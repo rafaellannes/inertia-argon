@@ -215,9 +215,20 @@
 
               <li class="nav-item">
                 <Link
-                  :class="route().current('admin.noticias.*') ? 'active' : ' '"
+                  :class="route().current('admin.tags.*') ? 'active' : ' '"
                   class="nav-link"
-                  :href="route('admin.noticias.index')"
+                  :href="route('admin.tags.index')"
+                >
+                  <span class="sidenav-mini-icon"> T </span>
+                  <span class="sidenav-normal"> Tags </span>
+                </Link>
+              </li>
+
+              <li class="nav-item">
+                <Link
+                  :class="route().current('admin.servicos.*') ? 'active' : ' '"
+                  class="nav-link"
+                  :href="route('admin.servicos.index')"
                 >
                   <span class="sidenav-mini-icon"> S </span>
                   <span class="sidenav-normal"> Serviços </span>
