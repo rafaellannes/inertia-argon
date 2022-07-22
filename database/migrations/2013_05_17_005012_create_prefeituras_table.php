@@ -17,7 +17,7 @@ class CreatePrefeiturasTable extends Migration
             $table->id();
             $table->string('descricao')->unique();
             $table->string('dominio')->unique();
-            $table->uuid('uuid');
+            $table->uuid('uuid')->unique();
             $table->string('logo')->nullable();
             $table->enum('ativo', ['Y', 'N'])->default('Y');
             $table->timestamps();

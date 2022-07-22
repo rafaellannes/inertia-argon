@@ -17,7 +17,12 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 
- import { Multiselect } from 'vue-multiselect';
+import { Multiselect } from 'vue-multiselect';
+
+import VueGeolocation from "vue3-geolocation";
+import GMaps from "vuejs3-google-maps";
+
+/* import GMaps from "../js/gmaps/gmaps"; */
 
 
 
@@ -31,6 +36,13 @@ createInertiaApp({
             .use(plugin)
             .mixin({ methods: { route } })
             .component('multiselect', Multiselect)
+            .use(VueGeolocation)
+            .use(GMaps, {
+                load: {
+                    apiKey: "AIzaSyDszgZC2TR3trCXgf_UzckjbK84mT7GWy4",
+                    libraries: ["places"],
+                },
+            })
             .mount(el);
     },
 });

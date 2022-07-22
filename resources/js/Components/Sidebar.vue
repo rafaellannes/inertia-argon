@@ -41,7 +41,11 @@
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <Link class="nav-link" :href="route('admin.dashboard')">
+          <Link
+            :href="route('admin.dashboard')"
+            class="nav-link"
+            :class="route().current('admin.dashboard') ? 'active' : ' '"
+          >
             <div
               class="
                 icon icon-shape icon-sm
@@ -58,6 +62,7 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </Link>
         </li>
+
         <li class="nav-item">
           <Link
             :href="route('admin.prefeituras.index')"
@@ -81,6 +86,55 @@
             </div>
             <span class="nav-link-text ms-1">Prefeituras</span>
           </Link>
+        </li>
+
+        <li class="nav-item">
+          <a
+            data-bs-toggle="collapse"
+            href="#roles"
+            class="nav-link collapsed"
+            aria-controls="roles"
+            role="button"
+            aria-expanded="false"
+          >
+            <div
+              class="
+                icon icon-shape icon-sm
+                text-center
+                d-flex
+                align-items-center
+                justify-content-center
+              "
+            >
+              <i class="ni ni-ungroup text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Acessos</span>
+          </a>
+          <div class="collapse" id="roles" style="">
+            <ul class="nav ms-4">
+              <li class="nav-item">
+                <Link
+                  class="nav-link"
+                  :href="route('admin.roles.index')"
+                  :class="route().current('admin.roles.*') ? 'active' : ' '"
+                >
+                  <span class="sidenav-mini-icon"> P </span>
+                  <span class="sidenav-normal"> Perfis </span>
+                </Link>
+              </li>
+
+              <li class="nav-item">
+                <Link
+                  class="nav-link"
+                  :href="route('admin.permissions.index')"
+                  :class="route().current('admin.permissions.*') ? 'active' : ' '"
+                >
+                  <span class="sidenav-mini-icon"> P </span>
+                  <span class="sidenav-normal"> Permissões </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
 
         <li class="nav-item">

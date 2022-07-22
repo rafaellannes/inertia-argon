@@ -4,6 +4,10 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 /* @import '~bootstrap/scss/bootstrap'; */
 /* @import "custom";
  */
-.modal {
-  z-index: 99999999999999 !important;
+.navbar-vertical.navbar-expand-xs {
+  z-index: 2 !important;
+}
+
+.pac-container {
+  z-index: 1051 !important;
 }

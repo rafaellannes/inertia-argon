@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             IconesSeeder::class,
             PrefeiturasSeeder::class,
-            UsersSeed::class
+            RedeSocialSeeder::class,
+            PermissonsRolesSeedder::class,
+
         ]);
     }
 }

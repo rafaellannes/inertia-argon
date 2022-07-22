@@ -264,38 +264,6 @@
                       {{ option.descricao }}
                     </template>
                   </multiselect>
-
-                  <!-- <multiselect
-                    v-model="form.icone"
-                    placeholder="Selecione um ícone"
-                    label="descricao"
-                    :option-height="104"
-                    :options="options"
-                    :multiple="true"
-                    :close-on-select="false"
-                    :clear-on-select="false"
-                    :preserve-search="true"
-                    track-by="descricao"
-                    :preselect-first="true"
-                  >
-                    <template v-slot:singlelabel="{ value }">
-                      <div class="multiselect-single-label">
-                        <img
-                          class="character-label-icon"
-                          :src="value.link_img"
-                        />
-                        {{ value.descricao }}
-                      </div>
-                    </template>
-
-                    <template v-slot:option="{ option }">
-                      <img
-                        class="character-option-icon"
-                        :src="option.link_img"
-                      />
-                      {{ option.descricao }}
-                    </template>
-                  </multiselect> -->
                 </div>
                 <div
                   class="invalid-feedback mb-3"

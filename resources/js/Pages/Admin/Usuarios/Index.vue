@@ -89,6 +89,17 @@
 
                       <th
                         class="
+                          text-uppercase text-secondary text-xxs
+                          font-weight-bolder
+                          opacity-7
+                          ps-2
+                        "
+                      >
+                        Perfil
+                      </th>
+
+                      <th
+                        class="
                           text-center text-uppercase text-secondary text-xxs
                           font-weight-bolder
                           opacity-7
@@ -121,6 +132,14 @@
                         <div class="px-4 py-1">
                           <div class="justify-content-center">
                             <h6 class="mb-0 text-sm">{{ user.email }}</h6>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="px-4 py-1">
+                          <div class="justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ user.roles[0].name }}</h6>
                           </div>
                         </div>
                       </td>

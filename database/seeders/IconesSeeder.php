@@ -16,12 +16,10 @@ class IconesSeeder extends Seeder
         $icones = [
             [
                 'descricao' => 'search',
-                'icone' => 'e88a',
                 'link_img' => '/assets/img/icons/search.png',
             ],
             [
                 'descricao' => 'star',
-                'icone' => 'e838',
                 'link_img' => '/assets/img/icons/star.png',
             ],
 

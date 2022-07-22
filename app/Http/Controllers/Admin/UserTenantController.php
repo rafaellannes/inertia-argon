@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserStoreUpdateRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,11 +12,13 @@ use Inertia\Inertia;
 class UserTenantController extends Controller
 {
     protected $user;
+    protected $role;
 
 
-    public function __construct(User $user)
+    public function __construct(User $user, Role $role)
     {
         $this->user = $user;
+        $this->role = $role;
     }
     /**
      * Display a listing of the resource.
@@ -26,19 +29,23 @@ class UserTenantController extends Controller
     {
         $userLogado = auth()->user()->prefeitura_id;
 
-        $users = $this->user::when($request->filter, function ($query, $filter) {
+        $users = $this->user->when($request->filter, function ($query, $filter) {
             $query->where('name', 'LIKE', '%' . $filter . '%');
         })->where('prefeitura_id', $userLogado)->latest()->paginate()->withQueryString();
 
         return Inertia::render('Admin/Usuarios/Index', [
             'users' => $users,
+            'roles' => $this->role->all(),
         ]);
     }
 
 
     public function store(UserStoreUpdateRequest $request)
     {
-        $request->merge(['prefeitura_id' => auth()->user()->prefeitura_id]);
+        $request->merge([
+            'prefeitura_id' => auth()->user()->prefeitura_id,
+            'password' => bcrypt($request->password),
+        ]);
 
         $this->user->create($request->all());
 

@@ -16,6 +16,9 @@ use App\Http\Controllers\Admin\{
     SubCategoriaController,
     TagController,
     ServicoController,
+    LojistaController,
+    PermissionController,
+    RoleController,
 };
 
 
@@ -43,6 +46,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    //ROTA DE Roles (PERFIS) - ADMIN
+    Route::resource('roles', RoleController::class);
+
+    //ROTA DE PERMISSÕES - ADMIN
+    Route::resource('permissions', PermissionController::class);
+
     //**ROTA DE CADASTRO DE USUÁRIO - ADMIN*/
     Route::get('prefeituras/usuarios', [UserController::class, 'index'])->name('prefeitura.usuarios.index');
     Route::post('prefeituras/usuarios', [UserController::class, 'store'])->name('prefeitura.usuarios.store');
@@ -60,7 +69,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])
     Route::resource('servicos-categoria', ServicoCategoriaController::class);
     Route::resource('subcategorias', SubCategoriaController::class);
     Route::resource('tags', TagController::class);
+
+     //**ROTA DE CADASTRO DE LOJISTA*/
+     Route::get('servicos/lojistas', [LojistaController::class, 'index'])->name('servico.lojistas.index');
+     Route::post('servicos/lojistas', [LojistaController::class, 'store'])->name('servico.lojistas.store');
+     Route::patch('servicos/lojistas/{servico}', [LojistaController::class, 'update'])->name('servico.lojistas.update');
+     //**ROTA DE CADASTRO DE LOJISTA*/
+
     Route::resource('servicos', ServicoController::class);
+
+
 
     //USUÁRIOS - USUARIOS TENANT(PREFEITURA)
     Route::resource('usuarios', UserTenantController::class);
